@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>F&F - Aguarde...</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <script type="text/javascript" src="js/instafeed.min.js"></script>
+    <style type="text/css">
+	img {
+   		position: absolute;
+   		top: 50%;
+   		left: 50%;
+		width: 500px;
+		height: 500px;
+   		margin-top: -250px; /* Half the height */
+   		margin-left: -250px; /* Half the width */
+	}
+    </style>
+	<script type="text/javascript">
+    		var feed = new Instafeed({
+        		get: 'tagged',
+        		tagName: 'ferroefarinha',
+   	    	 	clientId: 'e7a3f73d527c4b75bd579bd14f94a71c'
+    		});
+    		feed.run();
+	</script>
+
+    <body>
+	<div id="instafeed"></div>
+    </body>
+</html>
