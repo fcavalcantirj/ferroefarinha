@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>F&F - Aguarde...</title>
@@ -7,34 +6,107 @@
     </head>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/instafeed.min.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=API_KEI&sensor=true">
+    </script>
     <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0; padding: 0 }
+        #map-canvas { height: 100% }
       	img {
          		position: absolute;
          		top: 50%;
          		left: 50%;
-      		width: 500px;
-      		height: 500px;
+      		  width: 500px;
+      		  height: 500px;
          		margin-top: -250px; /* Half the height */
          		margin-left: -250px; /* Half the width */
       	}
     </style>
   	<script type="text/javascript">
+          //'<a href="{{link}}"><img src="{{image}}" /></a>'
+          google.maps.event.addDomListener(window, "load", initMap);
+          var images = [];
+          var mapOptions = {
+            center: new google.maps.LatLng(-34.397, 150.644),
+            zoom: 8
+          };
+          var map = new google.maps.Map(document.getElementById("map-canvas"),
+              mapOptions);
+          var successCallback = function(data){
+              console.log(data);
+              console.log(data.data[0].images.standard_resolution.url);
+              images = images.concat(data.data)
+          }
+          var hasMore=true;
       		var feed = new Instafeed({
           		get: 'tagged',
+              sortBy: 'random',
+              mock: false,
+              limit: 1,
+              success: successCallback,
+              resolution: 'standard_resolution',
           		tagName: 'ferroefarinha',
-     	    	 	clientId: 'e7a3f73d527c4b75bd579bd14f94a71c'
+     	    	 	clientId: 'e7a3f73d527c4b75bd579bd14f94a71c',
+              after: function() {
+                 if (!this.hasNext()) {
+                    console.log('false');
+                    hasMore = false;
+                 }
+              },
       		});
-      		feed.run();
-
+          feed.run();
+          function fetchNext(){
+            if(hasMore){
+              feed.next();
+            }
+          }
           function readJson(){
             $.getJSON( "content.json", function( data ) {
               console.log(data);
+              return data;
             });
           }
-          readJson();
+          function initMap(){
+            var data = readJson();
+            if(!data || !data.date){
+              //instagram - console.log
+              $('#instafeed').show();
+              $('#map-canvas').hide();
+            }
+            var isToday = checkIfDateIsToday(data.date);
+            if(!isToday){
+              //instagram - console.log
+              $('#instafeed').show();
+              $('#map-canvas').hide();
+            }else{
+              $('#instafeed').hide();
+              $('#map-canvas').show();
+            }
+            showMap();
+          }
+          function showMap(latLong){
+            var pos = new google.maps.LatLng(latLong);
+            map.setCenter(pos);
+            initialize();
+          }
+          function checkIfDateIsToday(someDate){
+            if(!someDate){
+              console.log('date param missing');
+              return false;
+            }
+            var today = new Date();
+            today.setHours(0);
+            today.setMinutes(0);
+            today.setSeconds(0);
+            var someDay = new Date(someDate);
+            if(today==someDay)
+              return true;
+            return false;
+          }
   	</script>
-
     <body>
+      <div id="map-canvas" style="width: 100%; height: 100%;"></div>
       <div id="instafeed"></div>
     </body>
 </html>
