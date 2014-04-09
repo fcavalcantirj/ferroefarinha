@@ -7,7 +7,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="js/instafeed.min.js"></script>
     <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC79QsWoQZxKSJTNn2lkOmZtuqmemXYskk&sensor=true">
+      src="https://maps.googleapis.com/maps/api/js?key=API_KEY&sensor=true">
     </script>
     <style type="text/css">
         html { height: 100% }
@@ -31,7 +31,7 @@
           //'<a href="{{link}}"><img src="{{image}}" /></a>'
           google.maps.event.addDomListener(window, "load", init);
           var images = [];
-          var mock = true;
+          var mock = false;
           var successCallback = function(data){
               console.log(data);
               console.log(data.data[0].images.standard_resolution.url);
