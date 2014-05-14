@@ -152,12 +152,13 @@
             img_obj.src = specificPc.images.standard_resolution.url;
             img_obj.onload = function (){
               $('#headerwrap').css('background-image','url('+specificPc.images.standard_resolution.url+')');
+              $('#headerwrap').height($(window).height());
             }
           }
           function readJson(){
             console.log('readJson with mock=['+mock+']');
             if(mock){
-              var obj = jQuery.parseJSON( '{"date": "May 13 2014","subheader": "Pça Mauro Duarte","text": "F&F nas ruas esta quinta, dia 27. Por favor, nos mandem uma mensagem inbox para saber onde. Abraços!","englishtext":"Tonights special, a F&F classic: Picnic Apimentado - made with fior di latte, ricotta gorgonzola, grana padano, and spicy honey.","position": "-22.9532299,-43.1832874"}' );
+              var obj = jQuery.parseJSON( '{"date": "May 12 2014","subheader": "Pça Mauro Duarte","text": "F&F nas ruas esta quinta, dia 27. Por favor, nos mandem uma mensagem inbox para saber onde. Abraços!","englishtext":"Tonights special, a F&F classic: Picnic Apimentado - made with fior di latte, ricotta gorgonzola, grana padano, and spicy honey.","position": "-22.9532299,-43.1832874"}' );
               jsonCallback(obj);
             }else{
               $.getJSON( "content.json", function( data ) {
@@ -207,7 +208,7 @@
           function getRandomInt (min, max) {
               return Math.floor(Math.random() * (max - min + 1)) + min;
           }
-          interval = setInterval('toScreenRandom()', 10000);
+          interval = setInterval('toScreenRandom()', 15000);
           function clear(){
             console.log('clear');
             clearTimeout(interval);

@@ -36,6 +36,7 @@ h1.logo {
 
 #headerwrap {
 	display: none;
+	min-height: 500px;
 }
 
 #headerwrap .logo {
@@ -88,6 +89,7 @@ h1.logo {
 }
 
 #menuToggle {
+	position: fixed;
 	top: 40px;
 	right: 40px;
 	left: auto;
